@@ -13,7 +13,7 @@ const PrimaryButton = ({ children }) => {
 						: styles.buttonInnerContainer
 				}
 				onPress={pressHandler}
-				android_ripple={{ color: "white" }}
+				android_ripple={{ color: "#640233" }}
 			>
 				<Text style={styles.buttonText}>{children}</Text>
 			</Pressable>
