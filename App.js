@@ -1,15 +1,34 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
 import Colors from "./constants/colors";
 import GameOverScreen from "./screens/GameOverScreen";
 
+SplashScreen.preventAutoHideAsync().catch((err) => console.log(err));
+
 export default function App() {
 	const [userNumber, setUserNumber] = useState(null);
 	const [gameIsOver, setGameIsOver] = useState(false);
+
+	const [fontsLoaded] = useFonts({
+		"open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+		"open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+	});
+
+	const onLayoutRootView = useCallback(async () => {
+		if (fontsLoaded) {
+			await SplashScreen.hideAsync();
+		}
+	}, [fontsLoaded]);
+
+	if (!fontsLoaded) {
+		return null;
+	}
 
 	const pickedNumberHandler = (pickedNumber) => {
 		setUserNumber(pickedNumber);
@@ -43,7 +62,12 @@ export default function App() {
 				style={styles.rootScreen}
 				imageStyle={styles.backgroundImage}
 			>
-				<SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+				<SafeAreaView
+					style={styles.rootScreen}
+					onLayout={onLayoutRootView}
+				>
+					{screen}
+				</SafeAreaView>
 			</ImageBackground>
 		</LinearGradient>
 	);
