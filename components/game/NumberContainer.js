@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 		borderColor: Colors.accent500,
 		padding: deviceWidth < 380 ? 12 : 24,
 		margin: deviceWidth < 380 ? 12 : 24,
+		marginBottom: 0,
 		borderRadius: 8,
 		alignItems: "center",
 		justifyContent: "center",
